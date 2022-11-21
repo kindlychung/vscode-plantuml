@@ -18,7 +18,9 @@ Rich PlantUML support for Visual Studio Code.
 
 ## Notice
 
-The server render is now very recommended by this extension, since it's much faster and much easier to setup, while the major weakness has been improved:
+Local render is recommended by this extension, since it does not involve network and startup is instant.
+
+The major weaknesses of server render have been improved:
 
 - Enables `POST` method, you can now render very-large diagrams
 - The extension comes with a new `include processor`, you won't encounter include problems again.
