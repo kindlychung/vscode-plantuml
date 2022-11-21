@@ -48,6 +48,17 @@ class Config extends ConfigReader {
         })();
     }
 
+    nativeBinary(uri: vscode.Uri): string {
+        let bin = this.read<string>('nativeBinary', uri);
+		if(!bin) {
+            throw new Error("plantuml.nativeBinary not defined in vscode settings");
+		}
+		if(!fs.existsSync(bin)) {
+            throw new Error("plantuml.nativeBinary setting is not valid, file not found");
+		}
+        return bin;
+    }
+
     fileExtensions(uri: vscode.Uri): string {
         let extReaded = this.read<string>('fileExtensions', uri).replace(/\s/g, "");
         let exts = extReaded || ".*";

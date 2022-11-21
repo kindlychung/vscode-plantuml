@@ -54,14 +54,14 @@ class LocalRender implements IRender {
         return this.createTask(diagram, "-pipemap", savePath);
     }
     private createTask(diagram: Diagram, taskType: string, savePath: string, format?: string): RenderTask {
-        if (!config.java) {
-            let pms = Promise.reject(localize(5, null));
-            return <RenderTask>{ promise: pms };
-        }
-        if (!fs.existsSync(config.jar(diagram.parentUri))) {
-            let pms = Promise.reject(localize(6, null, extensionPath));
-            return <RenderTask>{ promise: pms };
-        }
+        // if (!config.java) {
+        //     let pms = Promise.reject(localize(5, null));
+        //     return <RenderTask>{ promise: pms };
+        // }
+        // if (!fs.existsSync(config.jar(diagram.parentUri))) {
+        //     let pms = Promise.reject(localize(6, null, extensionPath));
+        //     return <RenderTask>{ promise: pms };
+        // }
 
         let processes: child_process.ChildProcess[] = [];
         let buffers: Buffer[] = [];
@@ -70,9 +70,10 @@ class LocalRender implements IRender {
         let pms = [...Array(diagram.pageCount).keys()].reduce(
             (pChain, index) => {
                 let params = [
-                    '-Djava.awt.headless=true',
-                    '-jar',
-                    config.jar(diagram.parentUri),
+					'-headless',
+                    // '-Djava.awt.headless=true',
+                    // '-jar',
+                    // config.jar(diagram.parentUri),
                     "-pipeimageindex",
                     `${index}`,
                     '-charset',
@@ -93,11 +94,13 @@ class LocalRender implements IRender {
                     }
                     includePath = includePath + path.delimiter + folderPath;
                 }
+                console.log("🚀 ~ file: local.ts ~ line 84 ~ LocalRender ~ createTask ~ includePath", includePath)
 
                 let diagramsRoot = config.diagramsRoot(diagram.parentUri);
                 if (diagramsRoot) {
                     includePath = includePath + path.delimiter + diagramsRoot.fsPath;
                 }
+                console.log("🚀 ~ file: local.ts ~ line 100 ~ LocalRender ~ createTask ~ diagramsRoot", diagramsRoot)
 
                 params.unshift('-Dplantuml.include.path=' + includePath);
 
@@ -109,17 +112,21 @@ class LocalRender implements IRender {
                 if (diagram.path) params.push("-filename", path.basename(diagram.path));
                 // Add user jar args
                 params.push(...config.jarArgs(diagram.parentUri));
-                let process : any = child_process.spawn(config.java(diagram.parentUri), params);
+                console.log("🚀 ~ file: local.ts ~ line 115 ~ LocalRender ~ createTask ~ params", params)
+                // let process : any = child_process.spawn(config.java(diagram.parentUri), params);
+                let process : any = child_process.spawn(config.nativeBinary(diagram.parentUri), params);
                 processes.push(process);
                 return pChain.then(
                     () => {
 
                         if (process.killed) {
                             buffers = null;
+							console.error("plantuml process is killed ");
                             return Promise.resolve(null);
                         }
 
                         if (diagram && diagram.content) {
+							console.log("plantuml writing output");
                             process.stdin.write(diagram.content);
                             process.stdin.end();
                         }

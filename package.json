@@ -215,6 +215,12 @@
           "default": "java",
           "description": "%plantuml.configuration.java%"
         },
+        "plantuml.nativeBinary": {
+          "type": "string",
+          "scope": "machine-overridable",
+          "default": "",
+          "description": "Native binary of plantuml"
+        },
         "plantuml.jar": {
           "type": "string",
           "scope": "machine-overridable",
