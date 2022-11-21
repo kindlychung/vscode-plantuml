@@ -2,8 +2,8 @@
 
 ## Fork
 
-This fork contains a different viewer, with better zoom performance, and allows you to click on diagram texts to focus the position on current editor window.
-
+This fork of https://github.com/well-ar/vscode-plantuml uses a native build of plantuml instead of replying on a 
+java run time and a jar file. See https://github.com/mikaelhg/puni2 for (docker-based) build instructions. After the build, copy the plantuml binary to some path and specify it in the `plantuml.nativeBinary` setting. For example: `/usr/local/bin/plantuml`.
 ---
 
 Rich PlantUML support for Visual Studio Code.
@@ -325,9 +325,8 @@ PlantUMLServer Render Settings:
 
 Local Render Settings:
 
-- `plantuml.java`: Java executable location.
+- `plantuml.nativeBinary`: set the path of `plantuml` binary
 - `plantuml.commandArgs`: commandArgs allows you add command arguments to java command, such as `-DPLANTUML_LIMIT_SIZE=8192`.
-- `plantuml.jar`: Alternate plantuml.jar location. Leave it blank to use integrated jar.
 - `plantuml.jarArgs`: jarArgs allows you add arguments to plantuml.jar, such as `-config plantuml.config`.
 - `plantuml.includepaths`: Specifies the include paths besides source folder and the `diagramsRoot`.
 

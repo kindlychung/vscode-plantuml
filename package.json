@@ -3,7 +3,7 @@
   "displayName": "PlantUML - Native Viewer",
   "description": "Rich PlantUML support for Visual Studio Code.",
   "icon": "images/icon.png",
-  "version": "2.17.2",
+  "version": "2.17.4",
   "publisher": "quiever",
   "engines": {
     "vscode": "^1.57.0"
@@ -209,23 +209,11 @@
           ],
           "description": "%plantuml.configuration.exportFormat%"
         },
-        "plantuml.java": {
-          "type": "string",
-          "scope": "machine-overridable",
-          "default": "java",
-          "description": "%plantuml.configuration.java%"
-        },
         "plantuml.nativeBinary": {
           "type": "string",
           "scope": "machine-overridable",
           "default": "",
           "description": "Native binary of plantuml"
-        },
-        "plantuml.jar": {
-          "type": "string",
-          "scope": "machine-overridable",
-          "default": "",
-          "description": "%plantuml.configuration.jar%"
         },
         "plantuml.diagramsRoot": {
           "type": "string",
